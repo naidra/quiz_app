@@ -1,0 +1,83 @@
+.scores_form.floating-label{
+    .form-group {
+        position:relative;
+    }
+    .form-label {
+        position:absolute;
+        top:0;
+        padding:7px 0 0 13px;
+        transition:all 200ms ease;
+        opacity:0.5;
+    }
+    .form-control:focus,
+    .form-control:not(:placeholder-shown) {
+        & + .form-label{
+            font-size:14px;
+            transform:translate3d(-14px, -33px, 0);
+            opacity:1;
+        }
+    }
+}
+
+.add_score_modal{
+    &.fade.modal .modal-dialog{
+        position:static;
+
+        &::after {
+            content: attr(data-name);
+            position: absolute;
+            left:0px;
+            bottom:0px;
+            font-size:90px;
+            opacity:0.5;
+            color:white;
+            padding-left:20px;
+        }
+        .modal-header{
+            min-height:150px;
+            .modal-title{ align-self:flex-end;color:white }
+            .close{
+                transform:translateX(100%);
+                font-size:30px;font-weight:100;
+                padding-top:0px;
+                padding-left:10px;
+                text-shadow:0 0 0 transparent;
+                color:white;
+                &:focus{ outline:0; }
+            }
+            // background-color:white;
+            // background-image:linear-gradient(to bottom, rgba(255, 255, 255, 0.52), rgba(0, 123, 255, .5)), url("https://www.nationalgeographic.com/content/dam/ngdotcom/rights-exempt/homepage/YourShotImages/10934736_uploadsmember1400105yourshot-1400105-10934736jpg_syptr2woicccriu5jqc532hxqhp3eflutfvvbpyjwjhzlmh4iziq_3000x1999.adapt.1900.1.jpg");
+        }
+    }
+    .submit_button{
+        &::after{
+            content:"»";
+            width:20px;
+            display:inline-block;
+            font-size:19px;
+            text-align:right;
+            max-width:1px;
+            opacity:0;
+            transition:all .3s ease;
+        }
+        &.btn-primary:not(:disabled):not(.disabled){
+            position:relative;
+            min-width:130px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            background-color:$yellow;
+            border-color:darken($yellow, 15%);
+            color:$black-text-color;
+            border-radius:5px;
+            letter-spacing:.025em;
+            padding:3px 0px;
+            font-size:14px;
+            font-weight:500;
+            transition:all .3s ease;
+            &:not(:disabled):active{ box-shadow:0 0 0 0.2rem rgba($yellow, 0.5);outline:0; }
+            &:not(:disabled):focus{ outline:0; }
+        }
+        &:hover::after{ max-width:20px;opacity:1; }
+    }
+}

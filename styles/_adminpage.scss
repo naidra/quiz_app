@@ -1,0 +1,32 @@
+.admin-page-wrapper{
+    .delete_btn{
+        border:0;
+        outline:0;
+        background:transparent;
+        cursor:pointer;
+        svg{
+            width:20px;
+            height:20px;
+        }
+    }
+    .logout_btn{
+        margin-left:auto;
+        transform:translate3d(0, -15px, 0);
+        position:relative;
+        min-width:130px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        background-color:$yellow;
+        border:1px solid darken($yellow, 15%);;
+        color:$black-text-color;
+        border-radius:5px;
+        letter-spacing:.025em;
+        padding:5px 0px;
+        font-size:14px;
+        font-weight:500;
+        transition:all .3s ease;
+        &:not(:disabled):active{ box-shadow:0 0 0 0.2rem rgba($yellow, 0.5);outline:0; }
+        &:not(:disabled):focus{ outline:0; }
+    }
+}

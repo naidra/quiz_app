@@ -7,6 +7,9 @@ export const initialState = {
 	questions: [],
 	categories: [],
 	playerName: "",
+	categorySelected: null,
+	difficultySelected: "easy",
+	allCategoriesShown: false,
 	error: null
 }
 
@@ -38,6 +41,15 @@ export function rootReducer(state = initialState, action) {
 
 	case appTypes.ADD_PLAYER_NAME:
 		return { ...state, playerName: action.payload }
+
+	case appTypes.SET_SELECTED_CATEGORY:
+		return { ...state, categorySelected: action.payload }
+
+	case appTypes.SET_SELECTED_DIFFICULTY:
+		return { ...state, difficultySelected: action.payload }
+
+	case appTypes.TOGGLE_CATEGORIES:
+		return { ...state, allCategoriesShown: action.payload }
 
 	default:
 		return state

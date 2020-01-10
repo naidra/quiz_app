@@ -1,7 +1,7 @@
-import auth0 from 'auth0-js'
-import jwtDecode from 'jwt-decode'
+import auth0 from "auth0-js"
+import jwtDecode from "jwt-decode"
 
-const AUTH_LOCALSTORAGE = 'auth_stuff'
+const AUTH_LOCALSTORAGE = "auth_stuff"
 
 export default class Auth {
 	auth0 = new auth0.WebAuth({
@@ -33,7 +33,7 @@ export default class Auth {
 				localStorage.setItem(AUTH_LOCALSTORAGE, JSON.stringify(authStuff))
 			} else if(err) {
 				if(err.error === "unauthorized") {
-					console.log('Error', err.errorDescription)
+					console.log("Error", err.errorDescription)
 				}
 			}
 			callThisAfter()

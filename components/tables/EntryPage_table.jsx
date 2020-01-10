@@ -22,7 +22,7 @@ const useStyles = makeStyles({
 const EntryPage_table = ({ players }) => {
 
 	const classes = useStyles()
-	const rows = players
+	const rows = players.filter(e => e.aprovuar).slice(0, 5)
 	return (
 		<TableContainer component={Paper}>
 			<Table className={classes.table} aria-label="simple table">
@@ -40,14 +40,12 @@ const EntryPage_table = ({ players }) => {
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{rows && rows.map(row => {
-						return row.aprovuar ? (
-							<TableRow hover role="checkbox" tabIndex={-1} key={row.koha}>
-								<TableCell align="left">{ row.emri }</TableCell>
-								<TableCell align="center">{ row.piket }</TableCell>
-							</TableRow>
-						) : null
-					})}
+					{rows && rows.map(row => (
+						<TableRow hover role="checkbox" tabIndex={-1} key={row.koha}>
+							<TableCell align="left">{ row.emri }</TableCell>
+							<TableCell align="center">{ row.piket }</TableCell>
+						</TableRow>
+					))}
 				</TableBody>
 			</Table>
 		</TableContainer>

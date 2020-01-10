@@ -1,26 +1,22 @@
 import { Component } from "react"
 import { connect } from "react-redux"
-import { getCategoriesAction, storePlayersAction } from "../actions/quizActions"
+import { getCategoriesAction, storePlayersAction, setSelectedCategoryAction, setSelectedDifficultyAction, toggleCategoriesAction } from "../actions/quizActions"
 import PropTypes from "prop-types"
 import Router from "next/router"
 import { collectionData } from "rxfire/firestore"
 import { db } from "../helpers/firebase/crud"
 import Layout from "../components/Layout"
 import EntryPage_table from "../components/tables/EntryPage_table"
+import toaster from "toasted-notes"
 
 class Index extends Component {
-	static async getInitialProps({ store }) {
+	static async getInitialProps({ store, isServer, query }) {
 		await store.dispatch(getCategoriesAction())
-		return {}
-	}
-
-	constructor() {
-		super()
-		this.state = {
-			category: null,
-			difficulty: "easy",
-			allCategoriesShown: false
+		if (!isServer && query.msg === "noQuestions") {
+			Router.push("/", "/", {shallow: true})
+			toaster.notify("Couldn't find questions for this category.", { position:"top-right", duration:3000 })
 		}
+		return {}
 	}
 
 	componentDidMount() {
@@ -32,8 +28,16 @@ class Index extends Component {
 	}
 
 	render() {
-		const { categories, players } = this.props
-		const { category, difficulty, allCategoriesShown } = this.state
+		const {
+			categories,
+			players,
+			categorySelected,
+			difficultySelected,
+			allCategoriesShown,
+			setSelectedCategoryAction,
+			setSelectedDifficultyAction,
+			toggleCategoriesAction
+		} = this.props
 		const difficultyOptions = [
 			{ id:"easy", label: "Easy" },
 			{ id:"medium", label: "Medium" },
@@ -54,13 +58,13 @@ class Index extends Component {
 											name="quiz_category"
 											value={item.id}
 											id="quiz_category"
-											checked={item.id === category}
-											disabled={!!category && !!difficulty}
+											checked={item.id === categorySelected}
+											disabled={!!categorySelected && !!difficultySelected}
 											className="d-none radio_button"
 											onChange={e => {
-												this.setState({ category: +e.target.value })
-												if(!difficulty) return
-												Router.push("/playQuiz/[category_id]", `/playQuiz/${e.target.value}?difficulty=${difficulty}`)
+												setSelectedCategoryAction(+e.target.value)
+												if(!difficultySelected) return
+												Router.push("/playQuiz/[category_id]", `/playQuiz/${e.target.value}?difficulty=${difficultySelected}`)
 											}} />
 										<div className="content">
 											<svg className="icon"><use xlinkHref={`#${item.id}-icon`} fill="#6090f7" /></svg>
@@ -72,7 +76,7 @@ class Index extends Component {
 						}
 						<div className="col-12">
 							<button className="show_more_categories"
-								onClick={() => this.setState(state => ({ allCategoriesShown: !state.allCategoriesShown }))}>
+								onClick={() => toggleCategoriesAction(!allCategoriesShown)}>
 								<svg className="down_arrow"><use xlinkHref="#down_arrow-icon" fill="#262f3c" /></svg>
 							</button>
 						</div>
@@ -85,17 +89,17 @@ class Index extends Component {
 									<input type="radio"
 										name="quiz_difficulty"
 										value={option.id}
-										checked={difficulty === option.id}
-										disabled={!!category && !!difficulty}
+										checked={difficultySelected === option.id}
+										disabled={!!categorySelected && !!difficultySelected}
 										id="quiz_difficulty"
 										className="d-none difficulty_option"
 										onChange={e => {
-											this.setState({ difficulty: e.target.value })
-											if(!category) return
-											Router.push("/playQuiz/[category_id]", `/playQuiz/${category}?difficulty=${e.target.value}`)
+											setSelectedDifficultyAction(e.target.value)
+											if(!categorySelected) return
+											Router.push("/playQuiz/[category_id]", `/playQuiz/${categorySelected}?difficulty=${e.target.value}`)
 										}} />
 									<div className="content">
-										<h4>{ option.label }</h4>
+										<h5>{ option.label }</h5>
 									</div>
 								</label>
 							))
@@ -127,6 +131,12 @@ Index.propTypes = {
 	loadingCategories: PropTypes.bool.isRequired,
 	storePlayersAction: PropTypes.func.isRequired,
 	players: PropTypes.array.isRequired,
+	categorySelected: PropTypes.number,
+	difficultySelected: PropTypes.string,
+	allCategoriesShown: PropTypes.bool,
+	setSelectedCategoryAction: PropTypes.func.isRequired,
+	setSelectedDifficultyAction: PropTypes.func.isRequired,
+	toggleCategoriesAction: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -134,8 +144,11 @@ const mapStateToProps = state => ({
 	categories: state.categories,
 	players: state.players,
 	loadingCategories: state.loadingCategories,
+	categorySelected: state.categorySelected,
+	difficultySelected: state.difficultySelected,
+	allCategoriesShown: state.allCategoriesShown,
 })
 
-const mapDispatchToProps = { storePlayersAction }
+const mapDispatchToProps = { storePlayersAction, setSelectedCategoryAction, setSelectedDifficultyAction, toggleCategoriesAction }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Index)

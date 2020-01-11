@@ -1,4 +1,10 @@
-import firebase from "firebase"
+// import firebase from "firebase"
+import * as firebase from "firebase/app"
+
+// Add the Firebase services that you want to use
+import "firebase/auth"
+import "firebase/firestore"
+
 
 export const firebaseConfig = {
 	apiKey: process.env.FIREBASE_API_KEY,

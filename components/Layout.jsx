@@ -1,6 +1,7 @@
 import { Component } from "react"
 import PropTypes from "prop-types"
 import HeaderBg from "../images/header_bg.jpg"
+import Open_trivia_logo from "../images/open_trivia_logo.png"
 import Icons from "./icons"
 
 
@@ -21,7 +22,7 @@ class Layout extends Component {
 					<div className="container py-2">
 						<div className="content d-flex align-items-center justify-content-end">
 							<p className="mb-0 mr-2">Content possible by:</p>
-							<a href="https://opentdb.com" target="_blank" rel="noopener noreferrer"><img src="https://opentdb.com/images/logo.png" alt="Opentdb Logo"/></a>
+							<a href="https://opentdb.com" target="_blank" rel="noopener noreferrer"><img src={Open_trivia_logo} alt="Opentdb Logo"/></a>
 						</div>
 					</div>
 				</div>

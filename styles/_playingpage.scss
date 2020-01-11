@@ -135,6 +135,7 @@
                 justify-content:center;
                 align-items:center;
                 background:$yellow;
+                transition:all .3s ease;
             }
             &:nth-child(2)::before{ content:"B"; }
             &:nth-child(3)::before{ content:"C"; }

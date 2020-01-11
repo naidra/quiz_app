@@ -2,7 +2,7 @@ import React, { useEffect } from "react"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { Formik } from "formik"
-import toaster from "toasted-notes"
+import cogoToast from "cogo-toast"
 import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
 import { addPlayerNameAction, increaseScoreAction } from "../../actions/quizActions"
@@ -25,11 +25,12 @@ const AddScoreForm = ({ addPlayerNameActionHandler, increaseScoreActionHandler, 
 				}}
 				onSubmit={(values, { setSubmitting }) => {
 					setSubmitting(false)
+					toggleFn(false)
+					if (!score) return
 					addPlayer(players, { emri:values.player_name, piket:score, koha:Date.now(), aprovuar: false })
 					localStorage.removeItem("player_score")
 					increaseScoreActionHandler(0)
-					toggleFn(false)
-					toaster.notify("Your score has been added.\n You can play again.", { position:"top-right", duration:8000 })
+					cogoToast.success("Your score has been added.\n You can play again.", { position: "top-right", heading: "Success" })
 				}}
 			>
 				{({

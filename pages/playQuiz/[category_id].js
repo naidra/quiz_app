@@ -55,11 +55,11 @@ class PlayQuiz extends Component {
 					{
 						question ?
 							<div className="row py-5">
-								<div className="col-3 pb-5">
+								<div className="col-6 col-md-3 pb-5">
 									<h5 className="mb-4 text-center">Question <span>{questionCount}/10</span></h5>
 									<div className="loader-like" style={{ "--percent": `-${questionCount * 10}%` }}></div>
 								</div>
-								<div className="col-9 text-right">
+								<div className="col-6 col-md-9 text-right">
 									<h5 className="mb-4 ">Score</h5>
 									<h2 className="scores">{(score || 0)}</h2>
 								</div>

@@ -7,7 +7,7 @@ export default class Auth {
 	auth0 = new auth0.WebAuth({
 		domain: "ardian.auth0.com",
 		clientID: "skJDBBOI9vrqjKggaDZDF9BQ7788L015",
-		redirectUri: "http://localhost:3000/admin",
+		redirectUri: "https://quizapp.ardians.now.sh/admin",
 		responseType: "token id_token",
 		scope: "openid profile",
 	})

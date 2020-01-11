@@ -7,14 +7,14 @@ import { collectionData } from "rxfire/firestore"
 import { db } from "../helpers/firebase/crud"
 import Layout from "../components/Layout"
 import EntryPage_table from "../components/tables/EntryPage_table"
-import toaster from "toasted-notes"
+import cogoToast from "cogo-toast"
 
 class Index extends Component {
 	static async getInitialProps({ store, isServer, query }) {
 		await store.dispatch(getCategoriesAction())
 		if (!isServer && query.msg === "noQuestions") {
 			Router.push("/", "/", {shallow: true})
-			toaster.notify("Couldn't find questions for this category.", { position:"top-right", duration:3000 })
+			cogoToast.warn("Couldn't find questions for this category.", { position: "top-right", heading: "Notification" })
 		}
 		return {}
 	}

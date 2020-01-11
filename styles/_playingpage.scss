@@ -80,6 +80,9 @@
         }
         &:hover::after{ max-width:20px;opacity:1; }
     }
+    @media (max-width:576px){
+        &.fade.modal .modal-dialog::after{ display:none; }
+    }
 }
 
 .play_quiz-wrapper{
@@ -106,6 +109,12 @@
             text-align:left;
             border:1px solid $border-color;
             padding:.8em .8em .8em 4em;
+            transition:all .2s ease;
+            &[disabled]{ pointer-events:none; }
+            &:hover{
+                background:rgba($yellow, .01);
+                border-color:white;
+            }
             &.correct{
                 border-color:$blue;
                 &::before{ background:$blue;color:white; }

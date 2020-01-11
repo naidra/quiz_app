@@ -10,8 +10,9 @@ import TableRow from "@material-ui/core/TableRow"
 import PropTypes from "prop-types"
 
 const columns = [
-	{ id: "emri", label: "Emri", minWidth: 170 },
-	{ id: "piket", label: "Piket", minWidth: 170, align: "center" }
+	{ id: "emri", label: "Name", minWidth: 170 },
+	{ id: "piket", label: "Points", minWidth: 170, align: "center" },
+
 ]
 
 const useStyles = makeStyles({

@@ -35,8 +35,13 @@ class PlayQuiz extends Component {
 	}
 
 	componentDidMount() {
+		const { score, questions, increaseScoreActionHandler } = this.props
 		const scoreStored = localStorage.getItem("player_score")
-		if (!this.props.score && scoreStored) this.props.increaseScoreActionHandler(+scoreStored)
+		if (!score && scoreStored) increaseScoreActionHandler(+scoreStored)
+		if (scoreStored && questions.length === 10) {
+			increaseScoreActionHandler(0)
+			localStorage.removeItem("player_score")
+		}
 	}
 
 	render() {

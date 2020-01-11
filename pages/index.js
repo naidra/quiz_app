@@ -105,7 +105,7 @@ class Index extends Component {
 							))
 						}
 					</div>
-					<div className="col-12 col-md-6 py-4 players-container">
+					<div className="col-12 col-lg-6 py-4 players-container">
 						{
 							!players || (players && Array.isArray(players) && !players.filter(i => i.aprovuar).length) ?
 								null :

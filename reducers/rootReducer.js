@@ -1,16 +1,18 @@
 import appTypes from "../actions/types"
 
 export const initialState = {
-	loadingQuestions: false,
-	loadingCategories: false,
-	players: [],
-	questions: [],
-	categories: [],
-	playerName: "",
-	categorySelected: null,
-	difficultySelected: "easy",
-	allCategoriesShown: false,
-	error: null
+	loadingQuestions:false,
+	loadingCategories:false,
+	players:[],
+	questions:[],
+	categories:[],
+	playerName:"",
+	categorySelected:null,
+	difficultySelected:"easy",
+	allCategoriesShown:false,
+	playerScore:null,
+	questionSelected:null,
+	error:null
 }
 
 export function rootReducer(state = initialState, action) {
@@ -50,6 +52,12 @@ export function rootReducer(state = initialState, action) {
 
 	case appTypes.TOGGLE_CATEGORIES:
 		return { ...state, allCategoriesShown: action.payload }
+
+	case appTypes.SAVE_SCORE:
+		return { ...state, playerScore: action.payload }
+
+	case appTypes.SELECT_ANSWER:
+		return { ...state, questionSelected: action.payload }
 
 	default:
 		return state

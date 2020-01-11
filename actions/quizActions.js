@@ -32,12 +32,13 @@ export const getQuestionsAction = (id, difficulty, ctx) => async dispatch => {
 	}
 }
 
-export const passToNextQuestionAction = questions => {
+export const passToNextQuestionAction = questions => dispatch => {
 	const questionsUpdated = [...questions]
 	questionsUpdated.shift()
 
 	Cookies.set("actual_questions", JSON.stringify(questionsUpdated), { expires: 7, path: "/playQuiz" })
-	return { type: appTypes.GET_QUESTIONS_SUCCESS, payload: questionsUpdated }
+	dispatch({ type: appTypes.GET_QUESTIONS_SUCCESS, payload: questionsUpdated })
+	dispatch(selectAnswerAction(null))
 }
 
 export const storePlayersAction = players => ({ type: appTypes.STORE_PLAYERS, payload: players })
@@ -56,3 +57,9 @@ export const toggleCategoriesAction = flag => dispatch => {
 	dispatch({ type: appTypes.TOGGLE_CATEGORIES, payload: flag })
 }
 
+export const increaseScoreAction = score => {
+	localStorage.setItem("player_score", score)
+	return ({ type: appTypes.SAVE_SCORE, payload: score })
+}
+
+export const selectAnswerAction = a => ({ type: appTypes.SELECT_ANSWER, payload: a })

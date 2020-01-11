@@ -2,14 +2,13 @@ import React, { useEffect } from "react"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { Formik } from "formik"
-import Router from "next/router"
 import toaster from "toasted-notes"
 import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
-import { addPlayerNameAction } from "../../actions/quizActions"
+import { addPlayerNameAction, increaseScoreAction } from "../../actions/quizActions"
 import { addPlayer } from "../../helpers/firebase/crud"
 
-const AddScoreForm = ({ addPlayerNameActionHandler, players, toggleFn }) => {
+const AddScoreForm = ({ addPlayerNameActionHandler, increaseScoreActionHandler, players, toggleFn, score }) => {
 	useEffect(() => {
 		addPlayerNameActionHandler("")
 	})
@@ -20,16 +19,16 @@ const AddScoreForm = ({ addPlayerNameActionHandler, players, toggleFn }) => {
 				initialValues={{ player_name: "" }}
 				validate={values => {
 					const errors = {}
-					if (!values.player_name || (values.player_name && values.player_name.length < 2)) {
+					if (!values.player_name || (values.player_name && values.player_name.length < 2))
 						errors.player_name = "You must enter your name to proceed"
-					}
 					return errors
 				}}
 				onSubmit={(values, { setSubmitting }) => {
 					setSubmitting(false)
-					addPlayer(players, { emri:values.player_name, piket:3, koha:Date.now(), aprovuar: false })
+					addPlayer(players, { emri:values.player_name, piket:score, koha:Date.now(), aprovuar: false })
+					localStorage.removeItem("player_score")
+					increaseScoreActionHandler(0)
 					toggleFn(false)
-					Router.push("/")
 					toaster.notify("Your score has been added.\n You can play again.", { position:"top-right", duration:8000 })
 				}}
 			>
@@ -66,19 +65,26 @@ const AddScoreForm = ({ addPlayerNameActionHandler, players, toggleFn }) => {
 	)
 }
 
+AddScoreForm.defaultProps = {
+	score: null
+}
 
 AddScoreForm.propTypes = {
 	addPlayerNameActionHandler: PropTypes.func.isRequired,
 	toggleFn: PropTypes.func.isRequired,
-	players: PropTypes.arrayOf(PropTypes.shape({})).isRequired
+	players: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+	score: PropTypes.number,
+	increaseScoreActionHandler: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
-	players: state.players
+	players: state.players,
+	score: state.playerScore
 })
 
 const mapDispatchToProps = dispatch => ({
-	addPlayerNameActionHandler: e => dispatch(addPlayerNameAction(e))
+	addPlayerNameActionHandler: e => dispatch(addPlayerNameAction(e)),
+	increaseScoreActionHandler: e => dispatch(increaseScoreAction(e))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddScoreForm)

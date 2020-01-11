@@ -81,3 +81,78 @@
         &:hover::after{ max-width:20px;opacity:1; }
     }
 }
+
+.play_quiz-wrapper{
+    .loader-like{
+        width:100%;
+        height:35px;
+        border:2px solid $blue;
+        background-image:linear-gradient(to right, rgba(0,0,0,0) 50%, $blue 50%);
+        background-size:200%;
+        background-position:var(--percent);
+        transition:background-position .3s ease;
+    }
+    .scores{ color:$blue; }
+    .answer-options{
+        padding:2em 1em;
+        display:flex;
+        flex-direction:column;
+        width:100%;
+        .option{
+            position:relative;
+            background:white;
+            width:100%;
+            font-size:1.25rem;
+            text-align:left;
+            border:1px solid $border-color;
+            padding:.8em .8em .8em 4em;
+            &.correct{
+                border-color:$blue;
+                &::before{ background:$blue;color:white; }
+            }
+            &.uncorrect{
+                border-color:$red;
+                &::before{ background:$red;color:white; }
+            }
+            &:not(:first-child){ margin-top:.7em; }
+            &::before{
+                content:"A";
+                position:absolute;
+                top:4px;
+                left:4px;
+                height:54px;
+                width:54px;
+                display:flex;
+                justify-content:center;
+                align-items:center;
+                background:$yellow;
+            }
+            &:nth-child(2)::before{ content:"B"; }
+            &:nth-child(3)::before{ content:"C"; }
+            &:nth-child(4)::before{ content:"D"; }
+        }
+    }
+    .play_again{
+        max-width:320px;
+        display:block;
+        &:hover{ text-decoration:none; }
+        h4{
+            text-align:center;
+            border:1px solid $blue;
+            box-shadow:0 0 0 0.1rem rgba($blue, 0.2);
+            padding:.4em;
+            cursor:pointer;
+            color:$black-text-color;
+            margin-bottom:3em;
+            border-radius:4px;
+            background:white;
+            transition:all .3s ease;
+            &:hover{
+                background:$yellow;
+                border-color:$yellow;
+                box-shadow:0 0 0 0.3rem rgba($yellow, 0.5);
+                text-decoration:none;
+            }
+        }
+    }
+}

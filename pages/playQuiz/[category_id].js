@@ -45,7 +45,7 @@ class PlayQuiz extends Component {
 		const answerOptions = incorrect_answers ? [...incorrect_answers] : []
 		const questionCount = 11 - questions.length
 		if (question) {
-			const randomIndex = question.indexOf(" ") % incorrect_answers.length
+			const randomIndex = question.indexOf(" ") % (incorrect_answers.length + 1)
 			answerOptions.splice(randomIndex, 0, correct_answer)
 		}
 
